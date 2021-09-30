@@ -1,0 +1,17 @@
+<html>
+<head>
+    <title>GameOfLife</title>
+    <link rel="stylesheet" type="text/css" href="src/style.css">
+    <script src="src/data.js"></script>
+</head>
+<body>
+    <svg id="container">
+        
+    </svg>
+    <script>
+        window.grid = new Grid();
+        window.grid.drawGrid();
+        window.onresize = redrawGrid;
+    </script>
+</body>
+</html>
