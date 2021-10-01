@@ -5,13 +5,39 @@
     <script src="src/data.js"></script>
 </head>
 <body>
-    <svg id="container">
+    <svg id="container" oncontextmenu='alert("hi")'>
         
     </svg>
+
+    <button id="anim" onclick="window.grid.startStopAnimation()">Start Animation</button>
+    <button id="step" onclick="window.grid.nextGeneration()">Next Step</button>
+
     <script>
+        // Generate and save main grid
         window.grid = new Grid();
+        // Draw starting grid
         window.grid.drawGrid();
+        // Redraw grid when browser is resized
         window.onresize = redrawGrid;
+
+        // Allow scrolling through arrow-keys
+        const pressedKeys = {};
+        window.onkeydown = function(e) { 
+            if (e.keyCode == 37) {          // left
+                window.grid.xPos -= 0.2;
+            } else if (e.keyCode == 38) {   // up
+                window.grid.yPos -= 0.2;
+            } else if (e.keyCode == 39) {   // right
+                window.grid.xPos += 0.2;
+            } else if (e.keyCode == 40) {   // down
+                window.grid.yPos += 0.2;
+            } 
+
+            window.grid.drawGrid();
+        };
+
+        // Animation doesn't run at the beginning
+        window.animationRunning = false;
     </script>
 </body>
 </html>
