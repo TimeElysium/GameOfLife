@@ -22,15 +22,15 @@
 
         // Allow scrolling through arrow-keys
         const pressedKeys = {};
-        window.onkeydown = function(e) { 
+        window.onkeyup = function(e) { 
             if (e.keyCode == 37) {          // left
-                window.grid.xPos -= 0.2;
+                window.grid.xPos -= 0.25;
             } else if (e.keyCode == 38) {   // up
-                window.grid.yPos -= 0.2;
+                window.grid.yPos -= 0.25;
             } else if (e.keyCode == 39) {   // right
-                window.grid.xPos += 0.2;
+                window.grid.xPos += 0.25;
             } else if (e.keyCode == 40) {   // down
-                window.grid.yPos += 0.2;
+                window.grid.yPos += 0.25;
             } 
 
             window.grid.drawGrid();
