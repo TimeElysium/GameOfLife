@@ -5,12 +5,13 @@
     <script src="src/data.js"></script>
 </head>
 <body>
-    <svg id="container" oncontextmenu='alert("hi")'>
+    <svg id="container" oncontextmenu='return false;'>
         
     </svg>
 
     <button id="anim" onclick="window.grid.startStopAnimation()">Start Animation</button>
     <button id="step" onclick="window.grid.nextGeneration()">Next Step</button>
+    <button id="reset" onclick="window.grid.resetGrid()">Reset</button>
 
     <script>
         // Generate and save main grid
@@ -24,13 +25,13 @@
         const pressedKeys = {};
         window.onkeyup = function(e) { 
             if (e.keyCode == 37) {          // left
-                window.grid.xPos -= 0.25;
+                window.grid.xPos -= 1;
             } else if (e.keyCode == 38) {   // up
-                window.grid.yPos -= 0.25;
+                window.grid.yPos -= 1;
             } else if (e.keyCode == 39) {   // right
-                window.grid.xPos += 0.25;
+                window.grid.xPos += 1;
             } else if (e.keyCode == 40) {   // down
-                window.grid.yPos += 0.25;
+                window.grid.yPos += 1;
             } 
 
             window.grid.drawGrid();
@@ -38,6 +39,11 @@
 
         // Animation doesn't run at the beginning
         window.animationRunning = false;
+
+
+        for (let i = 1; i <= 1; i++) {
+            console.log("");
+        }
     </script>
 </body>
 </html>

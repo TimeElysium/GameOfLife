@@ -24,13 +24,32 @@
     background-color: var(--color-dark-mode);
 }
 
-#step {
+#reset {
     position: absolute;
     width: 130px;
     height: 30px;
     left: 100%;
     top: 100%;
     transform: translate(-150px,-50px);
+    background-color: var(--color-dark-mode);
+    color: var(--color-main);
+    border: 1px solid var(--color-light);
+    border-radius: 5px;
+}
+
+#reset:hover {
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    border: 3px solid var(--color-light);
+}
+
+#step {
+    position: absolute;
+    width: 130px;
+    height: 30px;
+    left: 100%;
+    top: 100%;
+    transform: translate(-300px,-50px);
     background-color: var(--color-dark-mode);
     color: var(--color-main);
     border: 1px solid var(--color-light);
@@ -49,7 +68,7 @@
     height: 30px;
     left: 100%;
     top: 100%;
-    transform: translate(-350px,-50px);
+    transform: translate(-500px,-50px);
     background-color: var(--color-dark-mode);
     color: var(--color-main);
     border: 1px solid var(--color-light);

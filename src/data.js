@@ -4,12 +4,16 @@ class Grid {
      */
     constructor() {
         this.svgns = "http://www.w3.org/2000/svg";
-        this.cellSize = 40;
+        this.cellSize = 30;
         this.cells = [];
         this.maxCells = 2000;
         this.cells = this.generateGrid();
-        this.xPos = this.maxCells / 2;
-        this.yPos = this.maxCells / 2;
+        this.xPos = Math.floor(this.maxCells / 2);
+        this.yPos = Math.floor(this.maxCells / 2);
+        this.xMax = 0;
+        this.yMax = 0;
+        this.enableDrawing = false;
+        this.drawLife = true;
     }
 
     /**
@@ -50,7 +54,6 @@ class Grid {
     drawGrid() {
         // Svg container
         const svg = document.getElementById("container");
-        svg.innerHTML = "";
 
         // Svg scales
         const svgWidth = parseInt(getComputedStyle(svg).width.replace("px",""), 10);
@@ -59,42 +62,91 @@ class Grid {
         // Number of cells drawn on x-Axis and y-Axis
         const xCells = Math.ceil(svgWidth / this.cellSize);
         const yCells = Math.ceil(svgHeight / this.cellSize);
-
-        // Additional shifting based on position
-        const xShift = (Math.ceil(this.xPos) - this.xPos) * this.cellSize;
-        const yShift = (Math.ceil(this.yPos) - this.yPos) * this.cellSize;
         
-        //draw cells
-        for (let x = -1; x <= xCells; x++) {
-            for (let y = -1; y <= yCells; y++) {
-                let xPos = Math.ceil(this.xPos) + x - 1;
-                let yPos = Math.ceil(this.yPos) + y - 1;
+        if (xCells > this.xMax) {
+            for (let x = this.xMax; x < xCells; x++) {
+                for (let y = 0; y < this.yMax; y++) {
+                    let cell = document.createElementNS(this.svgns, "rect");
+                    cell.setAttribute("id", x.toString() + ":" + y.toString());
+                    cell.setAttribute("width", this.cellSize.toString());
+                    cell.setAttribute("height", this.cellSize.toString());
+                    cell.setAttribute("x", (x * this.cellSize).toString());
+                    cell.setAttribute("y", (y * this.cellSize).toString());
+                    cell.setAttribute("fill", "#2D3943");
+                    cell.setAttribute("stroke", "#161c21");
+                    cell.setAttribute("onmousedown", "window.grid.changeState(" + x.toString() + "," + y.toString() + ")");
+                    svg.appendChild(cell);
+                }
+            }
+            this.xMax = xCells;
+        }
 
-                let cell = document.createElementNS(this.svgns, "rect");
-                cell.setAttribute("id", xPos.toString() + ":" + yPos.toString());
-                cell.setAttribute("width", this.cellSize.toString());
-                cell.setAttribute("height", this.cellSize.toString());
-                cell.setAttribute("x", (x * this.cellSize + xShift).toString());
-                cell.setAttribute("y", (y * this.cellSize + yShift).toString());
+        if (yCells > this.yMax) {
+            for (let y = this.yMax; y < yCells; y++) {
+                for (let x = 0; x < this.xMax; x++) {
+                    let cell = document.createElementNS(this.svgns, "rect");
+                    cell.setAttribute("id", x.toString() + ":" + y.toString());
+                    cell.setAttribute("width", this.cellSize.toString());
+                    cell.setAttribute("height", this.cellSize.toString());
+                    cell.setAttribute("x", (x * this.cellSize).toString());
+                    cell.setAttribute("y", (y * this.cellSize).toString());
+                    cell.setAttribute("fill", "#2D3943");
+                    cell.setAttribute("stroke", "#161c21");
+                    cell.setAttribute("onmousedown", "window.grid.changeState(" + x.toString() + "," + y.toString() + ")");
+                    cell.setAttribute("onmousemove", "if (window.grid.enableDrawing == true) { window.grid.drawCell(" + x.toString() + "," + y.toString() + ") }");
+                    cell.setAttribute("onmouseup", "window.grid.enableDrawing = false;");
+                    svg.appendChild(cell);
+                }
+            }
+            this.yMax = yCells;
+        }
+
+        //draw cells
+        for (let x = 0; x < xCells; x++) {
+            for (let y = 0; y < yCells; y++) {
+                let xPos = Math.ceil(this.xPos) + x;
+                let yPos = Math.ceil(this.yPos) + y;
+
+                let cell = document.getElementById(x.toString() + ":" + y.toString());
                 cell.setAttribute("fill", this.getColor(xPos, yPos));
-                cell.setAttribute("stroke", "#161c21");
-                cell.setAttribute("onmousedown", "window.grid.changeState(" + xPos.toString() + "," + yPos.toString() + ")");
-                svg.appendChild(cell);
             }
         }
     }
 
     /**
-     * Change cell state from Dead -> Alive or Alive -> Dead
+     * Change drawing state from drawing -> not drawing and color clicked cell accordingly
      * @param {number} x x-Position of cell
      * @param {number} y y-Position of cell
      */
     changeState(x, y) {
-        if (x >= 0 && y >= 0 && x < this.maxCells && y < this.maxCells) {
-            if (this.cells[x][y] == 0) {
-                this.cells[x][y] = 1;
+        let xPos = x + this.xPos;
+        let yPos = y + this.yPos;
+        if (xPos >= 0 && yPos >= 0 && xPos < this.maxCells && yPos < this.maxCells) {
+            if (this.cells[xPos][yPos] == 0) {
+                this.cells[xPos][yPos] = 1;
+                this.drawLife = true;
             } else {
-                this.cells[x][y] = 0;
+                this.cells[xPos][yPos] = 0;
+                this.drawLife = false;
+            }
+            this.enableDrawing = true;
+        } 
+        this.drawGrid();
+    }
+
+    /**
+     * Change state of cell according to this.drawLife
+     * @param {number} x x-Position of cell
+     * @param {number} y y-Position of cell
+     */
+    drawCell(x, y) {
+        let xPos = x + this.xPos;
+        let yPos = y + this.yPos;
+        if (xPos >= 0 && yPos >= 0 && xPos < this.maxCells && yPos < this.maxCells) {
+            if (this.drawLife == true) {
+                this.cells[xPos][yPos] = 1;
+            } else {
+                this.cells[xPos][yPos] = 0;
             }
         } 
         this.drawGrid();
@@ -170,6 +222,15 @@ class Grid {
                 window.grid.nextGeneration();
             }
         }
+    }
+
+    resetGrid() {
+        for (let x = 0; x < this.maxCells; x++) {
+            for (let y = 0; y < this.maxCells; y++) {
+                this.cells[x][y] = 0;
+            }
+        }
+        this.drawGrid();
     }
 }
 
