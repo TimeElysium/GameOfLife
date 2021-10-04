@@ -63,6 +63,7 @@ class Grid {
         const xCells = Math.ceil(svgWidth / this.cellSize);
         const yCells = Math.ceil(svgHeight / this.cellSize);
         
+        // Create missing svg rects needed to draw
         if (xCells > this.xMax) {
             for (let x = this.xMax; x < xCells; x++) {
                 for (let y = 0; y < this.yMax; y++) {
@@ -80,7 +81,6 @@ class Grid {
             }
             this.xMax = xCells;
         }
-
         if (yCells > this.yMax) {
             for (let y = this.yMax; y < yCells; y++) {
                 for (let x = 0; x < this.xMax; x++) {
@@ -224,6 +224,9 @@ class Grid {
         }
     }
 
+    /**
+     * Reset the grid to dead
+     */
     resetGrid() {
         for (let x = 0; x < this.maxCells; x++) {
             for (let y = 0; y < this.maxCells; y++) {
