@@ -233,6 +233,8 @@ class Grid {
                 this.cells[x][y] = 0;
             }
         }
+        this.xPos = Math.floor(this.maxCells / 2);
+        this.yPos = Math.floor(this.maxCells / 2);
         this.drawGrid();
     }
 }

@@ -22,15 +22,16 @@
     width: 100%;
     height: 100%;
     background-color: var(--color-dark-mode);
+    min-width: 600px;
 }
 
 #reset {
     position: absolute;
-    width: 130px;
+    width: 150px;
     height: 30px;
     left: 100%;
     top: 100%;
-    transform: translate(-150px,-50px);
+    transform: translate(-170px,-50px);
     background-color: var(--color-dark-mode);
     color: var(--color-main);
     border: 1px solid var(--color-light);
@@ -45,11 +46,11 @@
 
 #step {
     position: absolute;
-    width: 130px;
+    width: 150px;
     height: 30px;
     left: 100%;
     top: 100%;
-    transform: translate(-300px,-50px);
+    transform: translate(-170px,-90px);
     background-color: var(--color-dark-mode);
     color: var(--color-main);
     border: 1px solid var(--color-light);
@@ -64,11 +65,11 @@
 
 #anim {
     position: absolute;
-    width: 180px;
+    width: 150px;
     height: 30px;
     left: 100%;
     top: 100%;
-    transform: translate(-500px,-50px);
+    transform: translate(-170px,-130px);
     background-color: var(--color-dark-mode);
     color: var(--color-main);
     border: 1px solid var(--color-light);
