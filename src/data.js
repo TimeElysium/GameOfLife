@@ -237,6 +237,22 @@ class Grid {
         this.yPos = Math.floor(this.maxCells / 2);
         this.drawGrid();
     }
+
+    /**
+     * Invert the whole grid: Dead->Life , Life->Dead
+     */
+    invertGrid() {
+        for (let x = 0; x < this.maxCells; x++) {
+            for (let y = 0; y < this.maxCells; y++) {
+                if (this.cells[x][y] == 0) {
+                    this.cells[x][y] = 1;
+                } else {
+                    this.cells[x][y] = 0;
+                }
+            }
+        }
+        this.drawGrid();
+    }
 }
 
 function redrawGrid() {
