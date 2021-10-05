@@ -200,10 +200,12 @@ class Grid {
     startStopAnimation() {
         if (window.animationRunning == true) {
             window.animationRunning = false;
-            document.getElementById("anim").innerHTML = "Start Animation";
+            document.getElementById("stopanim").innerHTML = "Start Animation";
+            document.getElementById("stopanim").id = "startanim";
         } else {
             window.animationRunning = true;
-            document.getElementById("anim").innerHTML = "Stop Animation";
+            document.getElementById("startanim").innerHTML = "Stop Animation";
+            document.getElementById("startanim").id = "stopanim";
             this.animateSteps();
         }
     }
@@ -213,7 +215,7 @@ class Grid {
      */
     animateSteps() {
         let id = null;
-        clearInterval(anim);
+        clearInterval(id);
         id = setInterval(animate, 250);
         function animate() {
             if (window.animationRunning == false) {
